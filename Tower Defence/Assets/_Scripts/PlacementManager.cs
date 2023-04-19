@@ -5,16 +5,15 @@ using UnityEngine.EventSystems;
 public class PlacementManager : MonoBehaviour
 {
     public LayerMask groundLayerMask;
-    public LayerMask towerLayerMask;
-    public GameObject objectToSpawn;
-    public GameObject towerPanel;
+    public GameObject towerParentPrefab;
 
 
-    private GameObject spawnedObject;
-    private bool isDragging = false;
-    bool hasntDragged = true;
-    bool selected = false;
-    private SelectionHandler selectedObject;
+
+    public bool isDraggingTower = false;
+    public GameObject followMouseTower;
+    private GameObject spawnedTower;
+    
+   
 
     #region Singleton
     public static PlacementManager Instance { get; private set; }
@@ -35,73 +34,25 @@ public class PlacementManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isDragging){ SpawnObjectAtPoint(); }
+        if (isDraggingTower) { 
+            
+            TowerFollowMouse(followMouseTower); 
 
-        if (Input.GetMouseButtonDown(0)) // left click released
-        {
-            if (!EventSystem.current.IsPointerOverGameObject())
-            {
-                DeselectTowerUi();
-               
-            }
-
-            if (isDragging)
-            {
-                isDragging = false;
-                hasntDragged = false;
-            }
+          if (Input.GetMouseButtonDown(0)) // left click released
+          {
+                isDraggingTower = false;
+          }
 
         }
 
-        if (isDragging) { return; }
 
-
-        // Check if mouse is over a tower
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, towerLayerMask))
-        {
-            if (!selected) { 
-
-            selectedObject = hit.collider.gameObject.GetComponentInParent<SelectionHandler>();
-
-            if (selectedObject != null)
-            {
-                selectedObject.MouseOver();
-            }
-            if (Input.GetMouseButtonDown(1))
-            {
-                selected = true;
-                selectedObject.Selected();
-                towerPanel.SetActive(true);
-                towerPanel.transform.position = Input.mousePosition;
-            }
-
-            }
-        }
-
-
-        else // Mouse is not over a tower
-        {
-            if (selectedObject != null && !selected) // If there was a selected object before
-            {
-                selectedObject.Deselected();
-                selectedObject = null; // Reset selected object
-            }
-        }
     }
-
-    private void DeselectTowerUi()
-    {
-        selected = false;
-        towerPanel.SetActive(false);
-    }
-
-    private void SpawnObjectAtPoint()
+    private void TowerFollowMouse(GameObject towerToMove)
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
         {
-            spawnedObject.transform.position = hit.point;
+            spawnedTower.transform.position = hit.point;
         }
     }
 
@@ -112,27 +63,20 @@ public class PlacementManager : MonoBehaviour
 
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
         {
-            Debug.Log("Spawn object at position: " + hit.point);
-            spawnedObject = Instantiate(objectToSpawn, hit.point, Quaternion.identity);
-            spawnedObject.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
-            isDragging = true;
-            hasntDragged = true;
+
+            spawnedTower = Instantiate(towerParentPrefab, hit.point, Quaternion.identity);
+            spawnedTower.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
+            isDraggingTower = true;
 
         }
         else
         {
-            spawnedObject = Instantiate(objectToSpawn, transform.position, Quaternion.identity);
-            spawnedObject.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
-            isDragging = true;
-            hasntDragged = true;
-            
+            spawnedTower = Instantiate(towerParentPrefab, transform.position, Quaternion.identity);
+            spawnedTower.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
+            isDraggingTower = true;
         }
+
+        followMouseTower = spawnedTower;
     }
 
-
-    public void Sell()
-    {
-        Destroy(selectedObject.gameObject);
-        DeselectTowerUi();
-    }
 }
