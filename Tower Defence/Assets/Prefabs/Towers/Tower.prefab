@@ -10,7 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2030400768185143526}
   - component: {fileID: 433384397}
-  m_Layer: 0
+  - component: {fileID: -5694099127178549755}
+  m_Layer: 6
   m_Name: Tower
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49,6 +50,23 @@ MonoBehaviour:
   projectilePrefab: {fileID: 7965423508527307664, guid: 40f6193c616443c45b0812ce4942f20d,
     type: 3}
   firePosition: {fileID: 5751179629873544161}
+  thisTower: {fileID: 0}
+  thisAnim: {fileID: 0}
+  path: {fileID: 0}
+--- !u!114 &-5694099127178549755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3566948676009463239}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75302b1fc9423264db137b1ec3b1dfc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  thisTowerController: {fileID: 433384397}
+  SelectionObject: {fileID: 0}
 --- !u!1 &4333432735146876128
 GameObject:
   m_ObjectHideFlags: 0
@@ -58,7 +76,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5751179629873544161}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: FirePos
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -12,6 +12,7 @@ public class Tower : ScriptableObject
     public float sightRadius;
 
     public int price;
+    
    
 
 }

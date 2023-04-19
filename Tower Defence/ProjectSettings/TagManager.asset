@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Path
   - RotatePoint
+  - Animator
+  - SelectionObject
   layers:
   - Default
   - TransparentFX
@@ -15,7 +17,7 @@ TagManager:
   - Ground
   - Water
   - UI
-  - 
+  - Tower
   - 
   - 
   - 

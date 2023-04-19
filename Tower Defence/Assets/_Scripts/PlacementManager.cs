@@ -1,13 +1,20 @@
+using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class PlacementManager : MonoBehaviour
 {
     public LayerMask groundLayerMask;
+    public LayerMask towerLayerMask;
     public GameObject objectToSpawn;
+    public GameObject towerPanel;
+
 
     private GameObject spawnedObject;
     private bool isDragging = false;
     bool hasntDragged = true;
+    bool selected = false;
+    private SelectionHandler selectedObject;
 
     #region Singleton
     public static PlacementManager Instance { get; private set; }
@@ -25,40 +32,84 @@ public class PlacementManager : MonoBehaviour
     }
     #endregion
 
+    // Update is called once per frame
     private void Update()
     {
+        if (isDragging){ SpawnObjectAtPoint(); }
 
-
-
-        if (isDragging) // left click held down
+        if (Input.GetMouseButtonDown(0)) // left click released
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
+            if (!EventSystem.current.IsPointerOverGameObject())
             {
-                spawnedObject.transform.position = hit.point;
+                DeselectTowerUi();
+               
+            }
+
+            if (isDragging)
+            {
+                isDragging = false;
+                hasntDragged = false;
+            }
+
+        }
+
+        if (isDragging) { return; }
+
+
+        // Check if mouse is over a tower
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, towerLayerMask))
+        {
+            if (!selected) { 
+
+            selectedObject = hit.collider.gameObject.GetComponentInParent<SelectionHandler>();
+
+            if (selectedObject != null)
+            {
+                selectedObject.MouseOver();
+            }
+            if (Input.GetMouseButtonDown(1))
+            {
+                selected = true;
+                selectedObject.Selected();
+                towerPanel.SetActive(true);
+                towerPanel.transform.position = Input.mousePosition;
+            }
+
             }
         }
 
-        if (Input.GetMouseButtonDown(0) && isDragging) // left click released
+
+        else // Mouse is not over a tower
         {
-            isDragging = false;
-            hasntDragged= false;
+            if (selectedObject != null && !selected) // If there was a selected object before
+            {
+                selectedObject.Deselected();
+                selectedObject = null; // Reset selected object
+            }
         }
-       /* else if (Input.GetMouseButtonDown(0) && !isDragging && !hasntDragged) // left click released
+    }
+
+    private void DeselectTowerUi()
+    {
+        selected = false;
+        towerPanel.SetActive(false);
+    }
+
+    private void SpawnObjectAtPoint()
+    {
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
         {
-            Actions.OnPlayerClickNoDragging();
-        }*/
+            spawnedObject.transform.position = hit.point;
+        }
     }
 
     public void SpawnTowerPrefab(Tower towerToSpawn)
     {
      
-         Debug.Log("In SpawnTowerPrefab");
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-       
-            Debug.Log("In Mouse down");
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
         {
             Debug.Log("Spawn object at position: " + hit.point);
@@ -76,9 +127,12 @@ public class PlacementManager : MonoBehaviour
             hasntDragged = true;
             
         }
+    }
 
 
-
-
+    public void Sell()
+    {
+        Destroy(selectedObject.gameObject);
+        DeselectTowerUi();
     }
 }

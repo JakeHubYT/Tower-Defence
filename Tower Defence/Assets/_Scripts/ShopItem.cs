@@ -7,16 +7,39 @@ public class ShopItem : MonoBehaviour
 {
     public Tower tower;
     public TextMeshProUGUI priceText;
-
+    Animator anim;
 
     private void Start()
     {
         priceText.text = "$" + tower.price.ToString();
+        anim = GetComponent<Animator>();
     }
-    public void SelectTower()
+
+    public void TryBuyItem()
     {
         if(tower == null) { Debug.LogError("NO TOWER SCRIPTABLE OBJECT SELECTED FOR " + this.name); return; }
 
-        PlacementManager.Instance.SpawnTowerPrefab(tower);
+
+
+        if( MoneyManager.Instance.money < tower.price ) 
+        {
+            anim.SetTrigger("Error");
+
+          //  Debug.Log("CANT BUY!!");
+        }
+        else
+        {
+            anim.SetTrigger("Buy");
+
+            MoneyManager.Instance.SubtractFromMoney(tower.price);
+            PlacementManager.Instance.SpawnTowerPrefab(tower);
+
+
+          //  Debug.Log("BOUGHT!!");
+        }
+       
+
+
+
     }
 }

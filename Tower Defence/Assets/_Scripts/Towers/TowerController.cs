@@ -1,3 +1,4 @@
+using PathCreation;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -8,18 +9,36 @@ public class TowerController : MonoBehaviour
     public Tower towerScriptableObject;
     public GameObject projectilePrefab;
     public Transform firePosition;
-    GameObject thisTower;
-   
+    public GameObject thisTower;
+    public Animator thisAnim;
+
+
+    public PathCreator path;
 
     private GameObject target;
     private float lastShotTime;
 
+   
     bool spawned = false;
+
+    
+       
+    
 
     //START IS TOO QUICK
     private void Start()
     {
-         thisTower = Instantiate(towerScriptableObject.model, transform.position, Quaternion.identity, transform);
+        thisTower = Instantiate(towerScriptableObject.model, transform.position, Quaternion.identity, transform);
+
+        path = GameObject.FindGameObjectWithTag("Path").GetComponent<PathCreator>();
+       
+         thisAnim = thisTower.transform.FindChildWithTag("Animator").GetComponent<Animator>();
+
+        if(thisAnim == null)
+        {
+            Debug.LogError("NO ANIM TAG ON TOWER! "+ thisTower.name);
+        }
+
     }
 
     void Update()
@@ -39,6 +58,16 @@ public class TowerController : MonoBehaviour
         {
             FireProjectile();
         }
+
+        if (towerScriptableObject.sightRadius > 20)
+        {
+            LookAtEntrance(path.path.GetPoint(1));
+        }
+        else
+        {
+            LookAt(path.path.GetClosestPointOnPath(transform.position), true);
+        }
+
     }
 
     void FindTarget()
@@ -63,6 +92,8 @@ public class TowerController : MonoBehaviour
 
     void FireProjectile()
     {
+        thisAnim.SetTrigger("Fire");
+
         lastShotTime = Time.time; 
 
         GameObject proj = Instantiate(projectilePrefab, firePosition.position, Quaternion.identity); // create the projectile
@@ -70,12 +101,32 @@ public class TowerController : MonoBehaviour
         proj.GetComponent<ProjectileController>().SetTarget(target.transform, towerScriptableObject.damage); // set the projectile's target and damage
 
 
-        Transform rotatePoint = thisTower.transform.FindChildWithTag("RotatePoint");
-        Vector3 targetPos = new Vector3(target.transform.position.x, target.transform.position.y, target.transform.position.z);
-        rotatePoint.LookAt(targetPos);
+       
+        Vector3 targetPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+
+        LookAt(targetPos);
+
+
+
     }
 
-   
+    void LookAt(Vector3 targetPosition, bool rotateEntireMesh = false)
+    {
+        Transform rotatePoint = thisTower.transform.FindChildWithTag("RotatePoint");
+       
+       // Debug.Log(thisTower.transform);
+        if (rotatePoint != null && !rotateEntireMesh) { rotatePoint.LookAt(targetPosition); }
+        else if (rotatePoint == null || rotateEntireMesh) { thisTower.transform.LookAt(targetPosition); }
+    }
+
+    void LookAtEntrance(Vector3 targetPosition)
+    {
+        Debug.Log(thisTower.transform);
+        thisTower.transform.LookAt(targetPosition); 
+    }
+
+
+
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;
