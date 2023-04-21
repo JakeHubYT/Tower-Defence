@@ -8,6 +8,8 @@ public class Tower : ScriptableObject
     public new string name;
     public GameObject model;
     public GameObject projectilePrefab;
+    public bool oneShotAudio = true;
+    public AudioClip fireSound;
 
     public float damage;
     public float fireRate;

@@ -19,6 +19,7 @@ public class TowerController : MonoBehaviour
     float lastShotTime;
     bool spawned = false;
     Transform rotatePoint;
+    
 
 
     //START IS TOO QUICK
@@ -75,6 +76,11 @@ public class TowerController : MonoBehaviour
                 
             }
         }
+
+        if(target == null)
+        {
+            AudioManager.Instance.FadeOut(1, true);
+        }
     }
 
     void FindTarget()
@@ -112,6 +118,20 @@ public class TowerController : MonoBehaviour
     }
     void FireProjectile()
     {
+        if (towerScriptableObject.oneShotAudio)
+        {
+            AudioManager.Instance.PlaySound(towerScriptableObject.fireSound);
+
+
+        }
+        else if (!towerScriptableObject.oneShotAudio)
+        {
+            AudioManager.Instance.PlayMusic(towerScriptableObject.fireSound, true, true);
+
+        }
+
+
+
         thisAnim.SetTrigger("Fire");
 
         lastShotTime = Time.time; 

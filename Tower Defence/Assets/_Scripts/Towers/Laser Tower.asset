@@ -16,7 +16,9 @@ MonoBehaviour:
   model: {fileID: 3262365543559011398, guid: 3bdf0963bf9f2eb419423ce26d08a16d, type: 3}
   projectilePrefab: {fileID: 7965423508527307664, guid: 40f6193c616443c45b0812ce4942f20d,
     type: 3}
+  oneShotAudio: 0
+  fireSound: {fileID: 8300000, guid: 6d0af66794dc7294782712abfbeb4640, type: 3}
   damage: 5
   fireRate: 0.01
-  sightRadius: 10
+  sightRadius: 7
   price: 150

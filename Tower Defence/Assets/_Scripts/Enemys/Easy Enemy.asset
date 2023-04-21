@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Basic Enemy
   model: {fileID: 6016602007931095074, guid: 0ba538ebc98acb340af56a6644273a92, type: 3}
-  health: 100
+  health: 25
   damage: 10
   speed: 20
+  dieSound: {fileID: 8300000, guid: 5b47fea0bea516649835e90fb472d9ba, type: 3}
+  cameraShakeStrength: 0
   moneyOnDeath: 2

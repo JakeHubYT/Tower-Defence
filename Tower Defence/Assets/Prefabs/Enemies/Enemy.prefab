@@ -159,6 +159,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+  hitSound: {fileID: 8300000, guid: 610e2de214452914291d715cc54052aa, type: 3}
+  totalTime: 0.075
+  currentTime: 0
 --- !u!114 &6692817366370997441
 MonoBehaviour:
   m_ObjectHideFlags: 0

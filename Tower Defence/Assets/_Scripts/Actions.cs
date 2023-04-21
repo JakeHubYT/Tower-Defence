@@ -9,5 +9,7 @@ public static class Actions
 
     public static Action OnWaveEnded;
 
+    public static Action OnEnemyKilled;
+
 
 }

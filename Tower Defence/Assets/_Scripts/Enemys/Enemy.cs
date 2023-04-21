@@ -10,6 +10,11 @@ public class Enemy : ScriptableObject
     public float health = 100;
     public float damage;
     public float speed;
+    public AudioClip dieSound;
+
+
+    public float cameraShakeStrength = .025f;
+
 
     public int moneyOnDeath = 2;
 

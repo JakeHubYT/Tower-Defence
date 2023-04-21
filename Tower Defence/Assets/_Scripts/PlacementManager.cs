@@ -8,7 +8,7 @@ public class PlacementManager : MonoBehaviour
     public GameObject towerParentPrefab;
 
 
-
+    public AudioClip placeTowerSound;
     public bool isDraggingTower = false;
     public GameObject followMouseTower;
     private GameObject spawnedTower;
@@ -42,6 +42,9 @@ public class PlacementManager : MonoBehaviour
 
           if (Input.GetMouseButtonDown(0)) 
           {
+
+                TutorialManager.Instance.OnPlaceTower();
+                AudioManager.Instance.PlaySound(placeTowerSound);
                 followMouseTower = null;
                 spawnedTower = null;
                 isDraggingTower = false;

@@ -7,6 +7,10 @@ public class ShopItem : MonoBehaviour
 {
     public Tower tower;
     public TextMeshProUGUI priceText;
+    public AudioClip buySound;
+    public AudioClip errorSound;
+
+
     Animator anim;
 
     private void Start()
@@ -25,7 +29,10 @@ public class ShopItem : MonoBehaviour
         {
             anim.SetTrigger("Error");
 
-          //  Debug.Log("CANT BUY!!");
+            AudioManager.Instance.PlaySound(errorSound);
+
+
+
         }
         else
         {
@@ -34,10 +41,10 @@ public class ShopItem : MonoBehaviour
             MoneyManager.Instance.SubtractFromMoney(tower.price);
             PlacementManager.Instance.SpawnTowerPrefab(tower);
 
+            AudioManager.Instance.PlaySound(buySound);
 
-          //  Debug.Log("BOUGHT!!");
         }
-       
+
 
 
 

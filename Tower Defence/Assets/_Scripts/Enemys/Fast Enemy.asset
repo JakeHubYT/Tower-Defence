@@ -17,3 +17,6 @@ MonoBehaviour:
   health: 100
   damage: 10
   speed: 25
+  dieSound: {fileID: 8300000, guid: 5b47fea0bea516649835e90fb472d9ba, type: 3}
+  cameraShakeStrength: 0.025
+  moneyOnDeath: 2
