@@ -31,8 +31,10 @@ public class EnemyController : MonoBehaviour
             Health playerHealth = other.GetComponent<Health>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(enemyScriptableObj.damage);
                 Destroy(gameObject);
+                playerHealth.TakeDamage(enemyScriptableObj.damage);
+                
+
             }
         }
     }

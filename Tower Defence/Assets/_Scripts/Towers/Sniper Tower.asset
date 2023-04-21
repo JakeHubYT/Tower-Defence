@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Sniper Tower
   model: {fileID: 2958174787509434263, guid: 5d8e8d7d4dce2fd4ba5b0880545925a6, type: 3}
+  projectilePrefab: {fileID: 7965423508527307664, guid: 40f6193c616443c45b0812ce4942f20d,
+    type: 3}
   damage: 200
-  fireRate: 5
-  sightRadius: 30
-  price: 20
+  fireRate: 3
+  sightRadius: 40
+  price: 45

@@ -26,6 +26,16 @@ public class MoneyManager : MonoBehaviour
     }
     #endregion
 
+    private void OnEnable()
+    {
+        Actions.OnWaveEnded += AddMoneyAfterRound;
+    }
+    private void OnDisable()
+    {
+        Actions.OnWaveEnded -= AddMoneyAfterRound;
+
+    }
+
     private void Start()
     {
         UpdateMoneyUi();
@@ -61,5 +71,10 @@ public class MoneyManager : MonoBehaviour
         urMoneyText.text = "Money $" +  money.ToString();
     }
 
+    void AddMoneyAfterRound()
+    {
+       // money += 20;
 
+        
+    }
 }

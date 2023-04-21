@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e1bbcb57fec7445ab9d206d715e791, type: 3}
+  m_Name: Fat Enemy
+  m_EditorClassIdentifier: 
+  name: Basic Enemy
+  model: {fileID: 6016602007931095074, guid: 814d6a48c2cf0cd408face5900817cf1, type: 3}
+  health: 20000
+  damage: 50
+  speed: 2

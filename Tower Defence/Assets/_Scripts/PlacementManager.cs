@@ -34,12 +34,16 @@ public class PlacementManager : MonoBehaviour
     // Update is called once per frame
     private void Update()
     {
-        if (isDraggingTower) { 
-            
-            TowerFollowMouse(followMouseTower); 
+        if (isDraggingTower) {
 
-          if (Input.GetMouseButtonDown(0)) // left click released
+            TowerFollowMouse(followMouseTower);
+
+
+
+          if (Input.GetMouseButtonDown(0)) 
           {
+                followMouseTower = null;
+                spawnedTower = null;
                 isDraggingTower = false;
           }
 
@@ -47,12 +51,14 @@ public class PlacementManager : MonoBehaviour
 
 
     }
-    private void TowerFollowMouse(GameObject towerToMove)
+    public void TowerFollowMouse(GameObject towerToMove)
     {
+        isDraggingTower = true;
+
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, groundLayerMask))
         {
-            spawnedTower.transform.position = hit.point;
+            towerToMove.transform.position = hit.point;
         }
     }
 
@@ -67,6 +73,7 @@ public class PlacementManager : MonoBehaviour
             spawnedTower = Instantiate(towerParentPrefab, hit.point, Quaternion.identity);
             spawnedTower.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
             isDraggingTower = true;
+            followMouseTower = spawnedTower;
 
         }
         else
@@ -74,9 +81,15 @@ public class PlacementManager : MonoBehaviour
             spawnedTower = Instantiate(towerParentPrefab, transform.position, Quaternion.identity);
             spawnedTower.GetComponent<TowerController>().towerScriptableObject = towerToSpawn;
             isDraggingTower = true;
+            followMouseTower = spawnedTower;
         }
 
-        followMouseTower = spawnedTower;
+       
+    }
+
+    public void ChangeFollowTower(GameObject tower)
+    {
+        followMouseTower = tower;
     }
 
 }

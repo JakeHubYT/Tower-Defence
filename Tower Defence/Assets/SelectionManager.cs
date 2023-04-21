@@ -9,7 +9,7 @@ public class SelectionManager : MonoBehaviour
     public LayerMask towerLayerMask;
 
 
-    private SelectionHandler thisTowerSelectionHandler;
+    public SelectionHandler thisTowerSelectionHandler;
     bool selected = false;
 
 
@@ -34,15 +34,18 @@ public class SelectionManager : MonoBehaviour
         {
             if (!selected)
             {
-
+              
                 thisTowerSelectionHandler = hit.collider.gameObject.GetComponentInParent<SelectionHandler>();
 
                 if (thisTowerSelectionHandler != null)
                 {
                     thisTowerSelectionHandler.MouseOver();
+                    thisTowerSelectionHandler.gameObject.GetComponent<TowerController>().ShowSightRadius();
+
                 }
                 if (Input.GetMouseButtonDown(1))
                 {
+                  
                     selected = true;
                     thisTowerSelectionHandler.Selected();
 
@@ -55,10 +58,16 @@ public class SelectionManager : MonoBehaviour
 
         else // Mouse is not over a tower
         {
+            if (!selected && thisTowerSelectionHandler != null) { 
+            thisTowerSelectionHandler.gameObject.GetComponent<TowerController>().HideSightRadius();
+            }
+
             if (thisTowerSelectionHandler != null && !selected)
             {
                 thisTowerSelectionHandler.Deselected();
-                thisTowerSelectionHandler = null; 
+                thisTowerSelectionHandler = null;
+
+                
             }
         }
     }
@@ -67,12 +76,19 @@ public class SelectionManager : MonoBehaviour
     {
         selected = false;
         towerPanel.SetActive(false);
+        thisTowerSelectionHandler = null;
+
+        if(thisTowerSelectionHandler != null)
+        thisTowerSelectionHandler.gameObject.GetComponent<TowerController>().HideSightRadius();
     }
 
     private void TriggerTowerUi()
     {
         towerPanel.SetActive(true);
         towerPanel.transform.position = Input.mousePosition;
+
+        thisTowerSelectionHandler.gameObject.GetComponent<TowerController>().ShowSightRadius();
+
     }
 
 
@@ -86,9 +102,11 @@ public class SelectionManager : MonoBehaviour
 
     public void Move()
     {
+        // PlacementManager.Instance.followMouseTower = thisTowerSelectionHandler.gameObject;
+       
+        PlacementManager.Instance.ChangeFollowTower(thisTowerSelectionHandler.gameObject);
         PlacementManager.Instance.isDraggingTower = true;
-        PlacementManager.Instance.followMouseTower = thisTowerSelectionHandler.gameObject;
-
+        thisTowerSelectionHandler = null;
         DeselectTowerUi();
 
     }

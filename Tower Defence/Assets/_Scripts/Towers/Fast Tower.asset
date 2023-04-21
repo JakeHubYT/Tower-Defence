@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Fast Tower
   model: {fileID: 3262365543559011398, guid: 6e20dfe28ddc989438727eae8566b55b, type: 3}
-  damage: 25
+  projectilePrefab: {fileID: 7965423508527307664, guid: 40f6193c616443c45b0812ce4942f20d,
+    type: 3}
+  damage: 50
   fireRate: 0.25
   sightRadius: 10
-  price: 7
+  price: 35

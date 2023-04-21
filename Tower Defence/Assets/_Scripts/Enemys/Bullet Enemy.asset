@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6e1bbcb57fec7445ab9d206d715e791, type: 3}
+  m_Name: Bullet Enemy
+  m_EditorClassIdentifier: 
+  name: Bullet Enemy
+  model: {fileID: 6016602007931095074, guid: ac9c72b566154f2478996c0060e79d26, type: 3}
+  health: 300
+  damage: 15
+  speed: 17

@@ -7,23 +7,19 @@ using UnityEngine;
 public class TowerController : MonoBehaviour
 {
     public Tower towerScriptableObject;
-    public GameObject projectilePrefab;
-    public Transform firePosition;
+    public Transform firePoint;
     public GameObject thisTower;
-    public Animator thisAnim;
+    public GameObject sightRadiusSphere;
 
-
-    public PathCreator path;
-
-    private GameObject target;
-    private float lastShotTime;
-
+    Animator thisAnim;
+    PathCreator path;
    
-    bool spawned = false;
 
-    
-       
-    
+    GameObject target;
+    float lastShotTime;
+    bool spawned = false;
+    Transform rotatePoint;
+
 
     //START IS TOO QUICK
     private void Start()
@@ -32,9 +28,12 @@ public class TowerController : MonoBehaviour
 
         path = GameObject.FindGameObjectWithTag("Path").GetComponent<PathCreator>();
        
-         thisAnim = thisTower.transform.FindChildWithTag("Animator").GetComponent<Animator>();
+        thisAnim = thisTower.transform.FindChildWithTag("Animator").GetComponent<Animator>();
 
-        if(thisAnim == null)
+        rotatePoint = thisTower.transform.FindChildWithTag("RotatePoint");
+        firePoint = thisTower.transform.FindChildWithTag("FirePoint");
+
+        if (thisAnim == null)
         {
             Debug.LogError("NO ANIM TAG ON TOWER! "+ thisTower.name);
         }
@@ -43,9 +42,9 @@ public class TowerController : MonoBehaviour
 
     void Update()
     {
-        if(towerScriptableObject == null) { return; }
+        if (towerScriptableObject == null) { return; }
 
-        if(spawned == false)
+        if (spawned == false)
         {
             lastShotTime = -towerScriptableObject.fireRate;
             spawned = true;
@@ -56,18 +55,26 @@ public class TowerController : MonoBehaviour
         // fire a projectile at the target if it's within range and enough time has elapsed since the last shot
         if (target != null && Time.time - lastShotTime > towerScriptableObject.fireRate)
         {
+            Vector3 targetPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
+            LookAt(targetPos);
             FireProjectile();
         }
 
-        if (towerScriptableObject.sightRadius > 20)
+        if (PlacementManager.Instance.isDraggingTower)
         {
-            LookAtEntrance(path.path.GetPoint(1));
-        }
-        else
-        {
-            LookAt(path.path.GetClosestPointOnPath(transform.position), true);
+            LookAtPath();
         }
 
+        // stop shooting at the target if it leaves the target radius
+        if (target != null)
+        {
+            float distanceToTarget = Vector3.Distance(transform.position, target.transform.position);
+            if (distanceToTarget > towerScriptableObject.sightRadius)
+            {
+                target = null;
+                
+            }
+        }
     }
 
     void FindTarget()
@@ -79,7 +86,7 @@ public class TowerController : MonoBehaviour
         {
             if (col.CompareTag("Enemy"))
             {
-                Debug.Log("Sees Enemy");
+               // Debug.Log("Sees Enemy");
                 float distance = Vector3.Distance(transform.position, col.transform.position);
                 if (distance < closestDistance)
                 {
@@ -90,33 +97,47 @@ public class TowerController : MonoBehaviour
         }
     }
 
+
+    void LookAtPath()
+    {
+        if (towerScriptableObject.sightRadius > 20)
+        {
+            LookAtEntrance(path.path.GetPoint(1));
+        }
+        else
+        {
+            LookAt(path.path.GetClosestPointOnPath(transform.position));
+        }
+
+    }
     void FireProjectile()
     {
         thisAnim.SetTrigger("Fire");
 
         lastShotTime = Time.time; 
 
-        GameObject proj = Instantiate(projectilePrefab, firePosition.position, Quaternion.identity); // create the projectile
+        GameObject proj = Instantiate(towerScriptableObject.projectilePrefab, firePoint.position, Quaternion.identity); // create the projectile
 
+        if (proj.GetComponent<BoulderController>() != null)
+        proj.GetComponent<BoulderController>().SetTarget(target.transform, towerScriptableObject.damage); // set the projectile's target and damage
+
+        else
         proj.GetComponent<ProjectileController>().SetTarget(target.transform, towerScriptableObject.damage); // set the projectile's target and damage
 
 
-       
-        Vector3 targetPos = new Vector3(target.transform.position.x, transform.position.y, target.transform.position.z);
 
-        LookAt(targetPos);
+       
+      
+
 
 
 
     }
 
-    void LookAt(Vector3 targetPosition, bool rotateEntireMesh = false)
+    void LookAt(Vector3 targetPosition)
     {
-        Transform rotatePoint = thisTower.transform.FindChildWithTag("RotatePoint");
-       
-       // Debug.Log(thisTower.transform);
-        if (rotatePoint != null && !rotateEntireMesh) { rotatePoint.LookAt(targetPosition); }
-        else if (rotatePoint == null || rotateEntireMesh) { thisTower.transform.LookAt(targetPosition); }
+        if (rotatePoint != null) { rotatePoint.LookAt(targetPosition); }
+        else if (rotatePoint == null ) { transform.LookAt(targetPosition); }
     }
 
     void LookAtEntrance(Vector3 targetPosition)
@@ -132,4 +153,12 @@ public class TowerController : MonoBehaviour
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, towerScriptableObject.sightRadius);
     }
+
+    public void ShowSightRadius()
+    {
+        sightRadiusSphere.transform.localScale = Vector3.one * (2 * towerScriptableObject.sightRadius);
+        sightRadiusSphere.SetActive(true);
+    }
+    public void HideSightRadius() => sightRadiusSphere.SetActive(false);
+    
 }

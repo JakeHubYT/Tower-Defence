@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Fast Enemy
   m_EditorClassIdentifier: 
   name: Basic Enemy
-  model: {fileID: 6016602007931095074, guid: 86ac485995c688344b566ba1011d449c, type: 3}
+  model: {fileID: 6016602007931095074, guid: 3207e4a5d465eb247a2330ae3ccfeacd, type: 3}
+  health: 100
   damage: 10
   speed: 25

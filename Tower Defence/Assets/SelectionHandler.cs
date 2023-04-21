@@ -20,7 +20,7 @@ public class SelectionHandler : MonoBehaviour
 
     public void MouseOver()
     {
-        Debug.Log("Over");
+        //Debug.Log("Over");
 
         SelectionObject.SetActive(true);
 
@@ -28,12 +28,12 @@ public class SelectionHandler : MonoBehaviour
 
     public void Selected()
     {
-        Debug.Log("Selected");
+      //  Debug.Log("Selected");
     }
 
     public void Deselected()
     {
-        Debug.Log("Deselected");
+        //Debug.Log("Deselected");
         SelectionObject.SetActive(false);
 
     }

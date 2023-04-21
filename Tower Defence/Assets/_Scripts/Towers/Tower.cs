@@ -7,6 +7,8 @@ public class Tower : ScriptableObject
 {
     public new string name;
     public GameObject model;
+    public GameObject projectilePrefab;
+
     public float damage;
     public float fireRate;
     public float sightRadius;

@@ -9,7 +9,8 @@ public class ProjectileController : MonoBehaviour
     public float destroyDelay; // the delay before the projectile is destroyed after impact
 
     private Transform target;
-    Vector3 targetPos;
+    private Vector3 targetPos;
+
     // set the projectile's target and damage
     public void SetTarget(Transform target, float damage)
     {
@@ -20,31 +21,32 @@ public class ProjectileController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(target!=null)
-             targetPos = target.position;
-
-        // move towards the target
-        if (targetPos != null)
+        if (target != null)
         {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
-
+            targetPos = target.position;
+            // move towards the target
+           transform.position = Vector3.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
+          // transform.Translate(Vector3.forward * speed * Time.deltaTime);
         }
-      
-          
+        else
+        {
+            // If there is no target, destroy the projectile
+            Destroy(gameObject, destroyDelay);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Enemy")
+        if (other.gameObject.CompareTag("Enemy"))
         {
+            // Deal damage to the enemy and destroy the projectile
             other.GetComponent<Health>().TakeDamage(damage);
-
-            Destroy(gameObject, destroyDelay);
+            Destroy(gameObject);
         }
-
-        if (other.gameObject.tag == "Ground")
+        else if (other.gameObject.CompareTag("Ground"))
         {
-            Destroy(gameObject, destroyDelay);
+            // Destroy the projectile if it hits the ground
+            Destroy(gameObject);
         }
     }
 }

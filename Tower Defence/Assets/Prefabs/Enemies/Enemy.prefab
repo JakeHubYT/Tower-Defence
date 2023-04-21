@@ -95,6 +95,7 @@ GameObject:
   - component: {fileID: 4860112433187396780}
   - component: {fileID: 240435304}
   - component: {fileID: 2063931341}
+  - component: {fileID: 6692817366370997441}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -110,7 +111,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1697766713222574191}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.905, y: 3.31, z: -1.487}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -143,9 +144,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab592cf59d3e10c48a7faa71cc06c2d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyScriptableObj: {fileID: 0}
+  enemyScriptableObj: {fileID: 11400000, guid: eca947607a838e543af162a3414c503a, type: 2}
   pathCreator: {fileID: 0}
-  speed: 5
 --- !u!114 &2063931341
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -159,3 +159,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 100
+--- !u!114 &6692817366370997441
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697766713222574191}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3fad90df832a649a7744cede7e3648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePrefab: {fileID: 1762000991858778661, guid: e44b4af5f52bf2c458fd01e99f3a4e70,
+    type: 3}

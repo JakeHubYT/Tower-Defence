@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4361061274780873527}
   - component: {fileID: 7678227014843194156}
   - component: {fileID: 1698741010369542985}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3320990387085842582}
   - component: {fileID: 997382367979030235}
   - component: {fileID: 6145830861350626681}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 747016710810905926}
   - component: {fileID: 1497263938420524089}
   - component: {fileID: 2203566028297646940}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -260,7 +260,7 @@ GameObject:
   - component: {fileID: 5431766947369509819}
   - component: {fileID: 4066793076602159812}
   - component: {fileID: 2089791290009501518}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -343,7 +343,7 @@ GameObject:
   - component: {fileID: 7399841422456386996}
   - component: {fileID: 8635255863097874597}
   - component: {fileID: 2967315920745402026}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Graphics (2)
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -424,7 +424,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9136667765103000389}
-  m_Layer: 0
+  - component: {fileID: -2241885141711802579}
+  m_Layer: 7
   m_Name: Fast Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -453,6 +454,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &-2241885141711802579
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6016602007931095074}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &8784564833699252996
 GameObject:
   m_ObjectHideFlags: 0
@@ -464,7 +478,7 @@ GameObject:
   - component: {fileID: 1128186643640700052}
   - component: {fileID: 3230711716746935216}
   - component: {fileID: 5486120364299897326}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Sphere (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -547,7 +561,7 @@ GameObject:
   - component: {fileID: 410631282039906811}
   - component: {fileID: 2016238641985787947}
   - component: {fileID: 3302166904372624448}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Enemy Graphics (1)
   m_TagString: Enemy
   m_Icon: {fileID: 0}

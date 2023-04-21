@@ -10,6 +10,8 @@ TagManager:
   - RotatePoint
   - Animator
   - SelectionObject
+  - FirePoint
+  - SightRadius
   layers:
   - Default
   - TransparentFX
@@ -18,7 +20,7 @@ TagManager:
   - Water
   - UI
   - Tower
-  - 
+  - Enemy
   - 
   - 
   - 

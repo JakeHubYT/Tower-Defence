@@ -10,6 +10,11 @@ public class Health : MonoBehaviour
   
     private void Start()
     {
+        if(GetComponent<EnemyController>())
+        {
+            maxHealth = GetComponent<EnemyController>().enemyScriptableObj.health;
+        }
+
         currentHealth = maxHealth;
        
        
@@ -17,11 +22,13 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(float damageAmount)
     {
+     
+
+        currentHealth -= damageAmount;
+
         if (GetComponent<HealthUI>())
             GetComponent<HealthUI>().UpdateHealthUI();
 
-        currentHealth -= damageAmount;
-       
         if (currentHealth <= 0)
         {
             Die();
@@ -30,6 +37,17 @@ public class Health : MonoBehaviour
 
     private void Die()
     {
+        if(tag == "Player")
+        {
+            Actions.OnLose();
+        }
+
+        else if(tag == "Enemy")
+        {
+            GetComponent<ParticleHandler>().PlayDeathParticle(transform);
+            MoneyManager.Instance.AddToMoney(GetComponent<EnemyController>().enemyScriptableObj.moneyOnDeath);
+        }
+
         // Handle death logic here
         Destroy(gameObject);
     }

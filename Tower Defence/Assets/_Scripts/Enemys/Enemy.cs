@@ -7,8 +7,11 @@ public class Enemy : ScriptableObject
 {
     public new string name;
     public GameObject model;
+    public float health = 100;
     public float damage;
     public float speed;
+
+    public int moneyOnDeath = 2;
 
 
 }
