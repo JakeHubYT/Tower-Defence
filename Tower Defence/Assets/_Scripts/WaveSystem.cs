@@ -44,38 +44,33 @@ public class WaveSystem : MonoBehaviour
 
     IEnumerator SpawnWave(Wave wave)
     {
-
-
         if (canContinueToNextWave == false)
         {
             yield break;
         }
-    
 
         UpdateRoundText();
         canclick = false;
         spawningWave = true;
 
-       
         int spawnCount = 0;
+        int numBigEnemies = Mathf.RoundToInt(wave.numEnemies * wave.bigEnemyRatio);
 
         yield return new WaitForSeconds(1f);
 
         while (spawnCount < wave.numEnemies)
         {
-            if (Random.value < wave.bigEnemyRatio && wave.bigEnemys != null && wave.bigEnemys.Length > 0)
+            if (spawnCount % 2 == 0 && numBigEnemies > 0 && wave.bigEnemys != null && wave.bigEnemys.Length > 0)
             {
                 enemyPrefab = wave.bigEnemys[Random.Range(0, wave.bigEnemys.Length)];
-                Instantiate(wave.enemyHolder, transform.position, Quaternion.identity).GetComponent<EnemyController>().enemyScriptableObj = enemyPrefab;
-                
+                numBigEnemies--;
             }
             else
             {
                 enemyPrefab = wave.enemys[Random.Range(0, wave.enemys.Length)];
-                Instantiate(wave.enemyHolder, transform.position, Quaternion.identity).GetComponent<EnemyController>().enemyScriptableObj = enemyPrefab;
-                
             }
 
+            Instantiate(wave.enemyHolder, transform.position, Quaternion.identity).GetComponent<EnemyController>().enemyScriptableObj = enemyPrefab;
             spawnCount++;
 
             yield return new WaitForSeconds(wave.spawnDelay);
@@ -85,10 +80,8 @@ public class WaveSystem : MonoBehaviour
         canSpawn = false;
         canContinueToNextWave = false;
         currentWaveIndex++;
+    }
 
-       
-
-        }
 
     void Update()
     {

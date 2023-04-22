@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a6e1bbcb57fec7445ab9d206d715e791, type: 3}
-  m_Name: Fat Enemy
+  m_Name: Queen Enemy
   m_EditorClassIdentifier: 
   name: Basic Enemy
-  model: {fileID: 6016602007931095074, guid: 814d6a48c2cf0cd408face5900817cf1, type: 3}
-  health: 6000
+  model: {fileID: 6016602007931095074, guid: 788401e486b60914eb0414e0b932e741, type: 3}
+  health: 20000
   damage: 50
-  speed: 2
+  speed: 3
   dieSound: {fileID: 8300000, guid: 5b47fea0bea516649835e90fb472d9ba, type: 3}
-  cameraShakeStrength: 0.3
-  moneyOnDeath: 2
+  cameraShakeStrength: 10
+  moneyOnDeath: 1000000

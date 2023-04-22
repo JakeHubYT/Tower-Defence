@@ -10,7 +10,11 @@ public class GameManager : MonoBehaviour
     public GameObject endScreen;
     public TextMeshProUGUI winText;
 
+    public GameObject StartScreen;
 
+
+    bool normalSpeed = true;
+    bool started = false;
 
 
     #region Singleton
@@ -51,8 +55,18 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        StartScreen.SetActive(true);
         endScreen.SetActive(false);
+
+        Time.timeScale = 0;
     }
+
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space) && started == false) { StartScreen.SetActive(false); Time.timeScale = 1; started = true; }    
+    }
+
 
     void SetWinText()
     {
@@ -62,6 +76,16 @@ public class GameManager : MonoBehaviour
     void ShowEndScreen()
     {
         endScreen.SetActive(true);
+
+    }
+
+    public void ToggleTime()
+    {
+        normalSpeed= !normalSpeed;
+
+
+        if(normalSpeed) { Time.timeScale = 1f; }
+        else if (!normalSpeed) { Time.timeScale = 2f; }
 
     }
 

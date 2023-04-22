@@ -63,6 +63,11 @@ public class SelectionManager : MonoBehaviour
             thisTowerSelectionHandler.gameObject.GetComponent<TowerController>().HideSightRadius();
             }
 
+
+
+
+            thisTowerSelectionHandler.Deselected();
+
             if (thisTowerSelectionHandler != null && !selected)
             {
                 thisTowerSelectionHandler.Deselected();
